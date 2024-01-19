@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  distributed-system-app-1:
+    image: distributed-system
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "9000:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - REDIS_HOST=redis
+      - DB_URL=jdbc:mariadb://db:3306/mydb
+      - DB_USER=mydb
+      - DB_PASSWORD=mypassword
+      - MYSQL_ROOT_PASSWORD=mypassword
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./config:/etc/mysql/conf.d
+    depends_on:
+      - redis
+      - db
+  distributed-system-app-2:
+    image: distributed-system
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "9001:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - REDIS_HOST=redis
+      - DB_URL=jdbc:mariadb://db:3306/mydb
+      - DB_USER=mydb
+      - DB_PASSWORD=mypassword
+    depends_on:
+      - redis
+      - db
+  distributed-system-app-3:
+    image: distributed-system
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "9002:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - REDIS_HOST=redis
+      - DB_URL=jdbc:mariadb://db:3306/mydb
+      - DB_USER=mydb
+      - DB_PASSWORD=mypassword
+    depends_on:
+      - redis
+      - db
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  db:
+    image: mariadb:10.5
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypassword
+      - MYSQL_DATABASE=mydb
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=mypassword
+    volumes:
+      - mariadb:/var/lib/mysql
+
+volumes:
+  mariadb:

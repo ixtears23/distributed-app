@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: myuser
+    password: mypassword
+
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+
+
