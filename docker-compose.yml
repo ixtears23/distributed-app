@@ -15,12 +15,12 @@ services:
       - DB_USER=mydb
       - DB_PASSWORD=mypassword
       - MYSQL_ROOT_PASSWORD=mypassword
-    volumes:
-      - ./data:/var/lib/mysql
-      - ./config:/etc/mysql/conf.d
     depends_on:
       - redis
       - db
+    networks:
+      - distributed_network
+
   distributed-system-app-2:
     image: distributed-system
     build:
@@ -37,6 +37,9 @@ services:
     depends_on:
       - redis
       - db
+    networks:
+      - distributed_network
+
   distributed-system-app-3:
     image: distributed-system
     build:
@@ -53,11 +56,15 @@ services:
     depends_on:
       - redis
       - db
+    networks:
+      - distributed_network
 
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"
+    networks:
+      - distributed_network
 
   db:
     image: mariadb:10.5
@@ -70,6 +77,11 @@ services:
       - MYSQL_PASSWORD=mypassword
     volumes:
       - mariadb:/var/lib/mysql
+    networks:
+      - distributed_network
 
 volumes:
   mariadb:
+
+networks:
+  distributed_network:
