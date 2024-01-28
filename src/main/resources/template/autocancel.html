@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Auto Cancel Management</title>
+</head>
+<body>
+<h2>Auto Cancel Information</h2>
+<form action="#" th:action="@{/autocancel/save}" th:object="${autoCancelInfo}" method="post">
+    <p>Profile: <input type="text" th:field="*{profile}" /></p>
+    <p>Seq Partner Class Schedule: <input type="text" th:field="*{seqPartnerClassSchedule}" /></p>
+    <p>Cancel Time: <input type="datetime-local" th:field="*{cancelTime}" /></p>
+    <p>Status: <input type="text" th:field="*{status}" /></p>
+    <p>Start Time: <input type="datetime-local" th:field="*{startTime}" /></p>
+    <p>End Time: <input type="datetime-local" th:field="*{endTime}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+
+<hr/>
+
+<h2>Retrieve or Delete Auto Cancel Information</h2>
+<form action="#" th:action="@{/autocancel/get}" method="get">
+    <p>Profile: <input type="text" name="profile" /></p>
+    <p>Seq Partner Class Schedule: <input type="text" name="seqPartnerClassSchedule" /></p>
+    <p><input type="submit" value="Retrieve" /></p>
+</form>
+
+<form action="#" th:action="@{/autocancel/delete}" method="post">
+    <p>Profile: <input type="text" name="profile" /></p>
+    <p>Seq Partner Class Schedule: <input type="text" name="seqPartnerClassSchedule" /></p>
+    <p><input type="submit" value="Delete" /></p>
+</form>
+</body>
+</html>
