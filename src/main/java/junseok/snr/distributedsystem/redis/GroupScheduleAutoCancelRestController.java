@@ -1,32 +1,30 @@
 package junseok.snr.distributedsystem.redis;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @RequestMapping("/autocancel")
 public class GroupScheduleAutoCancelRestController {
     private final AutoCancelService autoCancelService;
 
     @PostMapping("/save")
-    public void saveCancelInfo(@RequestParam String profile,
-                               @RequestParam long seqPartnerClassSchedule,
-                               @RequestBody AutoCancelInfo info) throws IOException {
-        autoCancelService.saveOrUpdateCancelInfo(profile, seqPartnerClassSchedule, info);
+    public void saveCancelInfo(AutoCancelInfo autoCancelInfo) throws IOException {
+        autoCancelService.saveOrUpdateCancelInfo(autoCancelInfo);
     }
 
     @GetMapping("/get")
-    public AutoCancelInfo getCancelInfo(@RequestParam String profile,
-                                        @RequestParam long seqPartnerClassSchedule) throws IOException {
-        return autoCancelService.getCancelInfo(profile, seqPartnerClassSchedule);
+    public AutoCancelInfo getCancelInfo(@RequestParam long seqPartnerClassSchedule) throws IOException {
+        return autoCancelService.getCancelInfo(seqPartnerClassSchedule);
     }
 
     @DeleteMapping("/delete")
-    public void deleteCancelInfo(@RequestParam String profile,
-                                 @RequestParam long seqPartnerClassSchedule) {
-        autoCancelService.deleteCancelInfo(profile, seqPartnerClassSchedule);
+    public void deleteCancelInfo(@RequestParam long seqPartnerClassSchedule) {
+        autoCancelService.deleteCancelInfo(seqPartnerClassSchedule);
     }
 }
