@@ -11,7 +11,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class DynamicScheduler {
+public class DynamicSchedulerCLI {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final List<ScheduledFuture<?>> scheduledTasks = new ArrayList<>();
 
@@ -22,31 +22,33 @@ public class DynamicScheduler {
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter command (add/cancel/exit):");
-        String command = scanner.nextLine();
-
-        switch (command) {
-            case "add":
-                System.out.println("Enter delay in seconds:");
-                long delay = scanner.nextLong();
-                scanner.nextLine(); // Consume newline
-                ScheduledFuture<?> scheduledTask = scheduleTask(() -> System.out.println("Task executed at: " + System.currentTimeMillis()), delay);
-                scheduledTasks.add(scheduledTask);
-                System.out.println("Task scheduled in " + delay + " seconds.");
-                break;
-            case "cancel":
-                System.out.println("Enter index of task to cancel:");
-                int index = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-                cancelTask(index);
-                break;
-            case "exit":
-                shutdown();
-                scanner.close();
-                return;
-            default:
-                System.out.println("Invalid command.");
+        while (true) {
+            System.out.println("Enter command (add/cancel/exit):");
+            String command = scanner.nextLine();
+            switch (command) {
+                case "add":
+                    System.out.println("Enter delay in seconds:");
+                    long delay = scanner.nextLong();
+                    scanner.nextLine(); // Consume newline
+                    ScheduledFuture<?> scheduledTask = scheduleTask(() -> System.out.println("Task executed at: " + System.currentTimeMillis()), delay);
+                    scheduledTasks.add(scheduledTask);
+                    System.out.println("Task scheduled in " + delay + " seconds.");
+                    break;
+                case "cancel":
+                    System.out.println("Enter index of task to cancel:");
+                    int index = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    cancelTask(index);
+                    break;
+                case "exit":
+                    shutdown();
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid command.");
+            }
         }
+
     }
 
     private void cancelTask(int index) {
@@ -75,7 +77,7 @@ public class DynamicScheduler {
 
 
     public static void main(String[] args) {
-        final DynamicScheduler dynamicScheduler = new DynamicScheduler();
+        final DynamicSchedulerCLI dynamicScheduler = new DynamicSchedulerCLI();
         dynamicScheduler.start();
     }
 }
