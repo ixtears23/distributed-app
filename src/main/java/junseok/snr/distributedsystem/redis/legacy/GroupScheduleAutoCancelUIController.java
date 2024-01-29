@@ -1,4 +1,4 @@
-package junseok.snr.distributedsystem.redis;
+package junseok.snr.distributedsystem.redis.legacy;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

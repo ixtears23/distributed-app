@@ -1,4 +1,4 @@
-package junseok.snr.distributedsystem.redis;
+package junseok.snr.distributedsystem.redis.legacy;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;

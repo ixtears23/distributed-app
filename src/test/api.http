@@ -1,0 +1,25 @@
+### Schedule Job 생성
+POST http://localhost:1234/api/v1/schedule/setting/create
+Content-Type: application/json
+
+{
+  "seqPartnerClassSchedule": 1,
+  "scheduledProcessTime": "2024-01-30T15:00:00"
+}
+
+### Schedule Job 변경
+POST http://localhost:1234/api/v1/schedule/setting/update
+Content-Type: application/json
+
+{
+  "seqPartnerClassSchedule": 1,
+  "scheduledProcessTime": "2027-01-30T15:00:00"
+}
+
+### Schedule Job 조회
+POST http://localhost:1234/api/v1/schedule/setting/get
+Content-Type: application/json
+
+{
+  "seqPartnerClassSchedule": 1
+}
