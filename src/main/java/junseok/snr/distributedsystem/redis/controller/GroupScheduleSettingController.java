@@ -17,8 +17,8 @@ import java.util.Optional;
 public class GroupScheduleSettingController {
     private final GroupScheduleService groupScheduleService;
 
-    @PostMapping("/get")
-    public ResponseEntity<GroupScheduleSettingValue> get(@RequestParam final long seqPartnerClassSchedule) {
+    @GetMapping
+    public ResponseEntity<GroupScheduleSettingValue> get(@RequestParam("seqPartnerClassSchedule") final long seqPartnerClassSchedule) {
         final GroupScheduleSettingValue scheduleSettingValue = groupScheduleService.get(seqPartnerClassSchedule);
 
         return ResponseEntity.of(Optional.of(scheduleSettingValue));

@@ -25,6 +25,17 @@ public class GroupScheduleService {
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
+    public GroupScheduleSettingValue get(final long seqPartnerClassSchedule) {
+        final String key = buildKey(seqPartnerClassSchedule);
+        final HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+        final Map<String, String> entries = hashOperations.entries(key);
+
+        if (entries.isEmpty()) {
+            throw new RuntimeException("=== No data exists for the specified key.");
+        }
+        return objectMapper.convertValue(entries, GroupScheduleSettingValue.class);
+    }
+
     public void create(final CreateGroupScheduleSettingRequest request) {
         final String key = buildKey(request.seqPartnerClassSchedule());
 
@@ -54,18 +65,6 @@ public class GroupScheduleService {
     public List<?> getAll() {
         return null;
     }
-
-    public GroupScheduleSettingValue get(final long seqPartnerClassSchedule) {
-        final String key = buildKey(seqPartnerClassSchedule);
-        final HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
-        final Map<String, String> entries = hashOperations.entries(key);
-
-        if (entries.isEmpty()) {
-            throw new RuntimeException("=== No data exists for the specified key.");
-        }
-        return objectMapper.convertValue(entries, GroupScheduleSettingValue.class);
-    }
-
 
     public String buildKey(final long seqPartnerClassSchedule) {
         final String key = JOB_PARTNER_CLASS_SCHEDULE_AUTO_OPEN_KEY

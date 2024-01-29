@@ -17,9 +17,4 @@ Content-Type: application/json
 }
 
 ### Schedule Job 조회
-POST http://localhost:1234/api/v1/schedule/setting/get
-Content-Type: application/json
-
-{
-  "seqPartnerClassSchedule": 1
-}
+GET http://localhost:1234/api/v1/schedule/setting?seqPartnerClassSchedule=2
